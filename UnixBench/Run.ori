@@ -1498,13 +1498,10 @@ sub runBenchmark {
 
     # Make up the actual benchmark parameters.
     my $params = mergeParams($baseParams, $tparams);
-    my $wrap = $ENV{'UB_WRAP'} // "";
 
     # Make up the command string based on the parameters.
     my $prog = $params->{'prog'} || $BINDIR . "/" . $bench;
-    my $command = $wrap ne ""
-        ? sprintf("%s \"%s\" %s", $wrap, $prog, $params->{'options'})
-        : sprintf("\"%s\" %s", $prog, $params->{'options'});
+    my $command = sprintf "\"%s\" %s", $prog, $params->{'options'};
     $command .= " < \"" . $params->{'stdin'} . "\"" if ($params->{'stdin'});
     $command .= " 2>&1";
     $command .= $params->{'stdout'} ? (" >> \"" . $logFile . "\"") : " > /dev/null";
